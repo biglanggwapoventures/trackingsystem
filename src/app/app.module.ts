@@ -7,10 +7,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
-// import { HomePage } from '../pages/home/home.';
 import { OrderListPageModule } from './../pages/order-list/order-list.module'
 import { OrderDetailsPageModule } from './../pages/order-details/order-details.module'
-import { LoginPage } from '../pages/login/login';
+import { LoginPageModule } from '../pages/login/login.module';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -22,9 +21,6 @@ import { TrackLocationProvider } from '../providers/track-location/track-locatio
 @NgModule({
   declarations: [
     MyApp,
-    // HomePage,
-    LoginPage,
-
   ],
   imports: [
     BrowserModule,
@@ -32,13 +28,12 @@ import { TrackLocationProvider } from '../providers/track-location/track-locatio
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     OrderListPageModule,
-    OrderDetailsPageModule
+    OrderDetailsPageModule,
+    LoginPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    // HomePage,
-    LoginPage
   ],
   providers: [
     StatusBar,

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
 import { SendLocationProvider } from './../send-location/send-location'; 
+import { Geolocation } from '@ionic-native/geolocation';
 
 /*
   Generated class for the TrackLocationProvider provider.
@@ -15,14 +16,21 @@ export class TrackLocationProvider {
   private orderId
   private personnelId
 
-  constructor(public http: HttpClient, private backgroundGeolocation: BackgroundGeolocation, public locationSender: SendLocationProvider) {
+  private watch
+
+  constructor(
+    public http: HttpClient, 
+    private backgroundGeolocation: BackgroundGeolocation, 
+    public locationSender: SendLocationProvider, 
+    private geolocation: Geolocation,
+  ) {
     console.log('Hello TrackLocationProvider Provider');
     const config: BackgroundGeolocationConfig = {
-      desiredAccuracy: 10,
-      stationaryRadius: 20,
-      distanceFilter: 30,
+      desiredAccuracy: 0,
+      stationaryRadius: 1,
+      distanceFilter: 2,
       debug: true, //  enable this hear sounds for background-geolocation life-cycle.
-      stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+      stopOnTerminate: false, // enable this to clear background location settings when the app terminates,
     };
     this.backgroundGeolocation.configure(config)
       .subscribe((location: BackgroundGeolocationResponse) => {
@@ -47,6 +55,24 @@ export class TrackLocationProvider {
 
   stop () {
     this.backgroundGeolocation.stop();
+  }
+  
+
+  startTracking (orderId:number, personnelId: number) {
+    this.orderId = orderId
+    this.personnelId = personnelId
+    this.watch = this.geolocation.watchPosition({
+      // maximumAge: 1000,
+      enableHighAccuracy: true
+    })
+    .filter((p) => p.coords !== undefined) //Filter Out Errors
+    .subscribe(position => {
+      this.locationSender.send(position.coords.latitude, position.coords.longitude, this.orderId, this.personnelId);
+    });
+  }
+  
+  stopTracking() {
+    this.watch.unsubscribe()
   }
 
 }

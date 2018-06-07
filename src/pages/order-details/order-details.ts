@@ -67,6 +67,7 @@ export class OrderDetailsPage {
           this.start()
         }else{
           this.stop()
+          this.navCtrl.pop();
         }
         this.loading.dismiss()
         this.alertCtrl.create({
@@ -78,11 +79,11 @@ export class OrderDetailsPage {
   }
 
   start(){
-    this.locationTracker.start(this.order['id'], this.user['personnel_id']);
+    this.locationTracker.startTracking(this.order['id'], this.user['personnel_id']);
   }
  
   stop(){
-    this.locationTracker.stop();
+    this.locationTracker.stopTracking();
   }
 
 

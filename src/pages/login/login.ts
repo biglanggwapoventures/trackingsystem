@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Alert, LoadingController, Loading, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Loading, AlertController } from 'ionic-angular';
 import { LoginProvider }  from './../../providers/login/login';
 import { OrderListPage } from './../order-list/order-list';
 

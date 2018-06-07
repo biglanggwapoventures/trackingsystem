@@ -8,12 +8,17 @@
 
   <ion-navbar>
     <ion-title>{{ user['fullname'] }}</ion-title>
+    <ion-buttons end> <button (click)="logout()"> Logout </button> </ion-buttons> 
   </ion-navbar>
+  
 
 </ion-header>
 
 
 <ion-content padding >
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 <ion-list>
   <ion-item *ngFor="let row of orders" (click)="showDetails(row['id'])">
     <h2><strong>{{ row['customer'] }}</strong></h2>

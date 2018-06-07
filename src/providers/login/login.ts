@@ -47,4 +47,9 @@ export class LoginProvider {
     })
   }
 
+  logout() {
+    return this.storage.remove('user')
+  }
+
+
 }
